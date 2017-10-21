@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Counter</title>
+</head>
+<body>
+<h3>Counter 对比demo</h3>
+<div style="margin-bottom: 20px"><span id="num">1</span><button id="btnA" >+</button><button id = "btnB">-</button></div>
+</body>
+<script>
+    var btnA = document.getElementById('btnA');
+    var btnB = document.getElementById('btnB');
+    var num = document.getElementById('num');
+    btnA.addEventListener('click',function () {
+       var count = parseInt(num.innerHTML);
+       num.innerHTML = count + 1;
+
+    });
+    btnB.addEventListener('click',function () {
+        var count = parseInt(num.innerHTML);
+        num.innerHTML = count - 1;
+
+    })
+</script>
+<script src="https://unpkg.com/san@latest/dist/san.dev.js"></script>
+<script>
+    var MyCouter = san.defineComponent({
+        template: '<div> {{value}} <button on-click="onIncrease(value)" >+</button><button on-click="onDecrease(value)" >-</button></div>',
+        initData: function () {
+            return {
+                value: 1
+            };
+        },
+        onIncrease: function (value) {
+            this.data.set('value',value+1)
+        },
+        onDecrease: function (value) {
+            this.data.set('value', value-1)
+        }
+    });
+
+
+/*    var MyApp = san.defineComponent({
+        initData: function () {
+            return {
+                value_a: 10,
+                value_b: 20
+            };
+        },
+        components:{
+            'ui-counter-a':MyCouter,
+            'ui-counter-b':MyCouter
+        },
+        template:'<div><ui-counter-a>Counter:A</ui-counter-a>' +
+        '<ui-counter-b>Counter:B </ui-counter-b>' +
+        '</div>'
+    });*/
+
+    var myApp = new MyCouter();
+    myApp.attach(document.body);
+</script>
+</html>
