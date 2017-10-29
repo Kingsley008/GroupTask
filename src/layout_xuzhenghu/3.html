@@ -121,11 +121,53 @@
 
 <br/>
 <!--柱状图-->
-<div id="c2">
-    <script>
+<div id="c2" style="width: 600px; margin: 0 auto">
 
-    </script>
 </div>
+<script>
+    (function () {
+        var data = [
+            {name: '信息与计算科学', value: 130},
+            {name: '数学与应用数学', value: 318},
+            {name: '金融复合数学', value: 211},
+            {name: '应用统计', value: 451},
+            {name: '光电信息技术', value: 221},
+            {name: '应用物理', value: 52}
+        ];
+        var chart = new G2.Chart({
+            id: 'c2',
+            width: 600,
+            height: 450,
+            plotCfg: {
+                margin: [20, 50, 60, 60] // 上，右，下，左
+            }
+        });
+        chart.source(data, {
+            name: {
+                alias: '学科'
+            },
+            value: {
+                alias: '数量'
+            }
+        });
+
+        chart.axis('name', {
+            title: null
+        });
+        chart.axis('value', {
+            titleOffset: 50
+        });
+        chart.legend({
+            title: '学科',
+            marker: 'square',
+            itemWrap: true
+
+        });
+
+        chart.interval().position('name * value').color('value');
+        chart.render();
+    })()
+</script>
 <br/>
 
 <div class="footer">© Copyright 2017 by view group</div>

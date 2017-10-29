@@ -1,0 +1,11 @@
+<!--pages/input/input.wxml-->
+<view class='container'>
+<form>  
+    <input placeholder='请输入4位停车码'>
+        
+    </input>
+    <button form-type='submit' bindtab=''>立即停车</button>
+</form>
+</view>
+
+

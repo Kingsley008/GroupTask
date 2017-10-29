@@ -1,0 +1,13 @@
+<!--index.wxml-->
+<view class="container">
+    <map id='diandianMap'
+    scale='{{scale}}'
+     latitude='{{latitude}}'
+     longitude='{{longitude}}
+     controls='{{controls}}'
+     markers='{{markers}}'
+     bindcontroltap='bindcontroltap'
+     bindmarkertap="bindmarkertap"
+     polyline="{{polyline}}" 
+     show-location></map>
+</view>

@@ -1,0 +1,17 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/scanresult/index",
+    "pages/count/index",
+    "pages/my/index",
+    "pages/settlement/index",
+    "pages/logs/logs",
+    "pages/input/input"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fbf011",
+    "navigationBarTitleText": "点点 停车",
+    "navigationBarTextStyle": "black"
+  }
+}

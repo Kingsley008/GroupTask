@@ -1,0 +1,54 @@
+{
+  "position": [
+   {
+      "id": 1,
+      "offset_Y":30.274085,
+      "offset_X":120.15507,
+      "title":"AAPark",
+      "status":true
+   },
+  {
+        "id": 2,
+        "offset_Y":30.274086,
+        "offset_X":120.15515,
+        "title": "BBPark",
+        "status": true
+    },
+  {
+        "id": 3,
+        "offset_Y":30.274185,
+        "offset_X":120.15527,
+        "title": "CCPark",
+        "status": false
+  },
+  {
+        "id": 4,
+        "offset_Y":30.274185,
+        "offset_X":120.15567,
+        "title": "DDPark",
+        "status": false
+  },
+    {
+      "id": 5,
+      "offset_Y":30.274185,
+      "offset_X":120.15647,
+      "title": "CCPark",
+      "status": false
+    },
+    {
+      "id": 6,
+      "offset_Y":30.274185,
+      "offset_X":120.15637,
+      "title": "DDPark",
+      "status": false
+    },
+    {
+        "id": 7,
+        "offset_Y": 30.214185,
+        "offset_X": 120.11637,
+        "title": "DDPark",
+        "status": false
+    }
+ 
+  ]
+}
