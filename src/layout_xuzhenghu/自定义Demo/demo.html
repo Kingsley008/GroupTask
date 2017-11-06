@@ -12,7 +12,7 @@
 <script>
     // 可以把 div 标签是一个dom对象 有自己的方法和属性 你可以log一下
     var root = document.getElementById('root');
-    console.log(root);
+    console.log(root.__proto__);
     // 开始自定义标签 调用api
      var myData1 = document.registerElement('my-data1');
     // 但是我们自定义的 myData 并不是一个 DOM对象
@@ -26,7 +26,7 @@
         prototype: myDataProto
     });
     var dataSource = new myData2();
-    myData2.innerText = 'my-data';
+    dataSource.innerText = 'my-data';
 
     console.log(dataSource); // 现在是一个node对象 可以使用append() 加入到dom中了
 
@@ -44,7 +44,7 @@
         shadow.appendChild(img);
         // 后面的内容就是和 a 标签相互关联了 en... 原型不懂 可能理解有点困难
     };
-    dataSource.dataset.myUrl ='www.text.com'; // 这样设置就可以了 实际内容 data-my-url
+    dataSource.dataset.myUrl ='www.text.com'; // 这样设置就可以了 实际内容 data-my-url = 'www.text.com';
     root.appendChild(dataSource);
 </script>
 </html>
