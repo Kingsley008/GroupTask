@@ -1,11 +1,11 @@
 <!--pages/input/input.wxml-->
 <view class='container'>
-<form>  
-    <input placeholder='请输入4位停车码'>
-        
-    </input>
-    <button form-type='submit' bindtab=''>立即停车</button>
-</form>
+<form class='forminput' bindsubmit="formSubmit" >  
+    <input class='inputnumber' name="parkNumber" placeholder='请输入4位停车码' placeholder-class='placeholder' value='' maxlength='4' bindblur = 'bindblur' />
+       
+    
+    <button class='btn' form-type='submit'>立即付费</button>
+</form >
 </view>
 
 

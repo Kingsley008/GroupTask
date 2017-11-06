@@ -1,77 +1,137 @@
 // pages/billing/index.js
+
 Page({
   data: {
     hours: 0,
     minuters: 0,
     seconds: 0,
-    billing: "正在计费"
+    billing: "本次停车耗时"
   },
   // 页面加载
   onLoad: function (options) {
-    // 获取车牌号，设置定时器
-    console.log(options.parkNumber)
     this.setData({
-      number: options.parkNumber,
-      timer: this.timer
+      hours:options.h,
+      minuters:options.m,
+      seconds:options.s,
+      payment:options.payment,
+      parkNumber:options.parkNumber,
     })
-    // 初始化计时器
-    let s = 0;
-    let m = 0;
-    let h = 0;
-    // 计时开始
-    this.timer = setInterval(() => {
-      this.setData({
-        seconds: s++
-      })
-      if (s == 60) {
-        s = 0;
-        m++;
-        setTimeout(() => {
-          this.setData({
-            minuters: m
-          });
-        }, 1000)
-        if (m == 60) {
-          m = 0;
-          h++
-          setTimeout(() => {
-            this.setData({
-              hours: h
-            });
-          }, 1000)
-        }
-      };
-    }, 1000)
   },
-  // 结束骑行，清除定时器
-  endRide: function () {
-    clearInterval(this.timer);
-    // 将数据发到后端
+  // TODO 结束停车 使用微信支付
+  wxPay: function () {
+    this.payoff()
+   
+  },
+
+  // TODO 通知后台 并跳转到现金支付的页面
+  cashPay: function () {
+    wx.showLoading({
+      title: '请等待',
+    })
     wx.request({
-      url:'',
+      url: 'https://www.easy-mock.com/mock/59f4490be75317333e4f4ef2/example/getParkingInfo',
       success:(res)=>{
-          
+        wx.hideLoading()
+        // TODO 要对回调的值进行验证
+        wx.redirectTo({
+          url: '../cash/index',
+        })
       }
     })
-    this.timer = "";
-    this.setData({
-      billing: "本次停车耗时",
-      disabled: true
+  },
+
+  // 异常反馈 接口预留
+  issueFeedback:function(){
+
+  },
+
+  // 调用微信接口  -- 开始 --
+  payoff: function (e) {
+    var that = this;
+    wx.login({
+      success: function (res) {
+        that.getOpenId(res.code, this.data.parkNumber);
+      }
+    });
+
+  },
+
+  //获取openid 将当前的车位号传给后台计算金额
+  getOpenId: function (code, parkNumber) {
+    var that = this;
+    wx.request({
+      url: 'https://www.see-source.com/weixinpay/GetOpenId',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: { 'code': code, 'parkNumber': parkNumber },
+      success: function (res) {
+        var openId = res.data.openid;
+        that.xiadan(openId);
+      }
     })
   },
-  // 携带定时器内容回到地图
-  moveToIndex: function () {
-    // 如果定时器为空
-    if (this.timer == "") {
-      // 关闭计费页跳到地图
-      wx.redirectTo({
-        url: '../index/index'
-      })
-      // 保留计费页跳到地图
-    } else {
-      wx.navigateTo({
-        url: '../index/index?timer=' + this.timer
-      })
-    }
+  //下单
+  xiadan: function (openId) {
+    var that = this;
+    wx.request({
+      url: 'https://www.see-source.com/weixinpay/xiadan',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: { 'openid': openId },
+      success: function (res) {
+        var prepay_id = res.data.prepay_id;
+        console.log("统一下单返回 prepay_id:" + prepay_id);
+        that.sign(prepay_id);
+      }
+    })
+  },
+
+  //签名
+  sign: function (prepay_id) {
+    var that = this;
+    wx.request({
+      url: 'https://www.see-source.com/weixinpay/sign',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: { 'repay_id': prepay_id },
+      success: function (res) {
+        that.requestPayment(res.data);
+
+      }
+    })
+  },
+
+  // 申请支付
+  requestPayment: function (obj) {
+    wx.requestPayment({
+      'timeStamp': obj.timeStamp,
+      'nonceStr': obj.nonceStr,
+      'package': obj.package,
+      'signType': obj.signType,
+      'paySign': obj.paySign,
+      'success': function (res) {
+        // 支付成功 
+        wx.redirectTo({
+          url: '../scanresult/index?parkNumber=' + parkNumuber,
+          success: function (res) {
+            wx.showToast({
+              title: '您已经付费成功',
+              duration: 1000
+            })
+          }
+        })
+
+      },
+      'fail': function (res) {
+        // 支付失败 
+
+      }
+    })
   }
 })

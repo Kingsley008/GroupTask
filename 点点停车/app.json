@@ -1,7 +1,7 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/scanresult/index",
+    "pages/cash/index",
     "pages/count/index",
     "pages/my/index",
     "pages/settlement/index",
@@ -10,8 +10,8 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fbf011",
-    "navigationBarTitleText": "点点 停车",
+    "navigationBarBackgroundColor": "#008cee",
+    "navigationBarTitleText": "目博云停车",
     "navigationBarTextStyle": "black"
   }
 }

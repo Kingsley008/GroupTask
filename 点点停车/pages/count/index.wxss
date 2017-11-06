@@ -18,9 +18,22 @@
 	width: 100%;
 	flex: 6;
 }
+
+.time .time-title{
+  font-size: 100 rpx;
+  margin-bottom: 20px;
+}
+
 .time .time-content{
 	font-size: 100rpx;
+  display: felx;
+  flex-direction: column;
 }
+
+.time .time-content text{
+  display: block
+}
+
 .endride button{
 	width: 90%;
 	margin-top: 40rpx;

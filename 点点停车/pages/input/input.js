@@ -1,72 +1,55 @@
 // pages/input/input.js
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
     isSubmit:false,
+    input:"",
   },
 
-  onSubmit(ev){
-    console.log(ev)
+  bindblur(ev){
+    this.setData({
+        input: ev.detail
+    })
+    
+  },
+
+  formSubmit(ev){
+    var self = this;
+    const value = ev.detail.value
+    const input = value.parkNumber
+    self.setData({parkNumber:input})
+
+    if (isNaN(value.parkNumber) || value.parkNumber == ""  ){
+      wx.showToast({
+        title: '请输入正确的数字',
+      })
+      return;
+    }
+
     this.setData({
       isSubmit:true,
     })
-  },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-  
-  },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
+    // 跳转到收费确认页面 
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
+    wx.showLoading({
+      title: '正在获取信息',
+      mask: true
+    })
+    // 先使用伪数据进行业务流程
+    wx.request({
+      url: 'https://www.easy-mock.com/mock/59f4490be75317333e4f4ef2/example/getParkingInfo',
+      data: { parkNumber: this.data.parkNumber },
+      method: 'GET',
+      success: (res) => {
+        wx.hideLoading()
+        // TODO 判断用户输入的车牌号是否存在 
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
+        wx.redirectTo({
+          url: `../count/index?h=${res.data.hour}&m=${res.data.minutes}&s=${res.data.second}&payment=${res.data.payment}&parkNumber=${self.data.parkNumber}`,
+        })
+      }
+    })
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
-  }
 })

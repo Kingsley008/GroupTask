@@ -1,0 +1,10 @@
+<!--pages/cash/index.wxml-->
+<view class="container">
+    <view class="password-title">
+       通知成功 请等待...
+    </view>
+
+    <view class="password-content">
+          <text>工作人员来向您收费</text>
+    </view>
+</view>

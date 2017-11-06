@@ -7,15 +7,20 @@
         <view class="time-title">
             <text>{{billing}}</text>
         </view>
+
         <view class="time-content">
             <text>{{hours}}:{{minuters}}:{{seconds}}</text>
+            <text>金额：￥{{payment}}</text>
         </view>
+        
     </view>
 
     <view class="endride">
-        <button type="warn" disabled="{{disabled}}" bindtap="endRide">
-        停车结束
+        <button type="primary" disabled="{{disabled}}" bindtap="wxPay">
+        微信支付
         </button>
-        <button type="primary" bindtap="moveToIndex">回到地图</button>
+        <button type="warn" bindtap="cashPay">
+        现金支付
+        </button>
     </view>
 </view>
