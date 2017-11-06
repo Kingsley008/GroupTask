@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义</title>
+</head>
+<body>
+<div id="root">
+
+</div>
+</body>
+<script>
+    // 可以把 div 标签是一个dom对象 有自己的方法和属性 你可以log一下
+    var root = document.getElementById('root');
+    console.log(root);
+    // 开始自定义标签 调用api
+     var myData1 = document.registerElement('my-data1');
+    // 但是我们自定义的 myData 并不是一个 DOM对象
+     console.log( new myData1());
+    // 通过原型链实现 继承 HTMLElement.prototype 也就是DOM对象原型的属性
+
+    // 定义原型  等价与  myDataProto.__proto__ = HTMLElement.prototype
+    var myDataProto = Object.create(HTMLElement.prototype);
+    // 再次加原型属性去 创造自定义的标签
+    var myData2 = document.registerElement('my-data',{
+        prototype: myDataProto
+    });
+    var dataSource = new myData2();
+    myData2.innerText = 'my-data';
+
+    console.log(dataSource); // 现在是一个node对象 可以使用append() 加入到dom中了
+
+    // root.appendChild(dataSource);
+
+    // 自定义 data -   createCallback 元素创建后调用
+    myDataProto.createCallback = function () {
+        // Shadow DOM 自己了解下把我也不太懂
+        var shadow = this.createShadowRoot();
+        var img = document.createElement('img');
+        // 将 img 属性 和 data- 属性关联
+        img.alt = this.getAttribute('data-name');
+        img.src = this.getAttribute('data-img');
+        // 在自定义的标签里就可以展示图片了
+        shadow.appendChild(img);
+        // 后面的内容就是和 a 标签相互关联了 en... 原型不懂 可能理解有点困难
+    };
+    dataSource.dataset.myUrl ='www.text.com'; // 这样设置就可以了 实际内容 data-my-url
+    root.appendChild(dataSource);
+</script>
+</html>
