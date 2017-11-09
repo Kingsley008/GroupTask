@@ -7,7 +7,7 @@
 <body>
 </body>
 <script>
-    var tag = document.register('Data-Set');
+    var tag = document.registerElement('Data-Set');
     var dataSource1 = new tag();
     dataSource1.dataset.id = "dataSet1";
     dataSource1.dataset.datasource = "dataSourceName";
@@ -16,6 +16,7 @@
     dataSource1.dataset.paged = "true";
     dataSource1.dataset.pageNumber = "1";
     dataSource1.dataset.pageSize = "100";
+    dataSource1.innerText = "data1";
     document.body.appendChild(dataSource1);
 
     var dataSource2 = new tag();
@@ -26,6 +27,7 @@
     dataSource2.dataset.paged = "true";
     dataSource2.dataset.pageNumber = "1";
     dataSource2.dataset.pageSize = "100";
+    dataSource1.innerText = "data2";
     document.body.appendChild(dataSource2);
 </script>
 </html>
