@@ -8,7 +8,8 @@
 	background-color: #fff;
 }
 .number,.endride{
-	padding: 60rpx 0;
+	padding: 30rpx 0;
+  margin-top: 60rpx;
 	flex: 2;
 	width: 100%;
 	text-align: center;
@@ -37,4 +38,12 @@
 .endride button{
 	width: 90%;
 	margin-top: 40rpx;
+}
+.fn-m {
+  display: block;
+  margin-top: 20px;
+}
+.fn-b {
+  font-size: 25px;
+  font-weight: bolder
 }

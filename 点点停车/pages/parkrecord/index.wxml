@@ -1,0 +1,16 @@
+<!--pages/parkrecord/index.wxml-->
+<view class='container'>
+  <view>
+  <text class='record-title'>我的停车记录</text>
+  </view>
+  <scroll-view class='scroll-items'>
+  <ul wx:for="{{parkRecord}}">
+    <span class='circle'></span>
+    <li class='item'>
+      <text class='item-time'>{{item.date}} 停车时长 {{item.duration}}</text>
+      <text class='item-parkNumber'>停车场：{{item.parkName}}</text>
+      <text class='item-payment'>花费{{item.payment}}元</text> 
+    </li>
+  </ul>
+  </scroll-view>
+</view>

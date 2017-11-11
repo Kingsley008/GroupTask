@@ -1,7 +1,7 @@
 <!--pages/billing/index.wxml-->
 <view class="container">
     <view class="number">
-        <text>当前车位编号: {{parkNumber}}</text>
+        <text>当前车位编号:<text class="fn-b">{{parkNumber}}</text></text>
     </view>
     <view class="time">
         <view class="time-title">
@@ -12,7 +12,7 @@
             <text>{{hours}}:{{minuters}}:{{seconds}}</text>
             <text>金额：￥{{payment}}</text>
         </view>
-        
+           <text class='fn-m'>*注意：具体支付金额以支付时间为准</text>
     </view>
 
     <view class="endride">

@@ -6,7 +6,9 @@
     "pages/my/index",
     "pages/settlement/index",
     "pages/logs/logs",
-    "pages/input/input"
+    "pages/input/input",
+    "pages/parkrecord/index",
+    "pages/wallet/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

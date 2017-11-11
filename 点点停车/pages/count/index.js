@@ -5,10 +5,11 @@ Page({
     hours: 0,
     minuters: 0,
     seconds: 0,
-    billing: "本次停车耗时"
+    billing: "本次停车耗时",
   },
   // 页面加载
   onLoad: function (options) {
+    console.log(options)
     this.setData({
       hours:options.h,
       minuters:options.m,

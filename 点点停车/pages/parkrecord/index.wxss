@@ -1,0 +1,43 @@
+/* pages/parkrecord/index.wxss */
+.container {
+  padding: 20rpx;
+  background-color: #fff;
+}
+.record-title {
+  display: block;
+  font-size: 50rpx;
+  margin-bottom: 20px;
+  font-weight: bolder;
+}
+
+.scroll-items .circle {
+    border-radius: 50%;
+    width: 15rpx;
+    height: 15rpx;
+    margin-bottom: 45px;
+    background-color: greenyellow;
+    margin-right: 15px;
+    float: left;
+}
+.scroll-items ul {
+  overflow: hidden
+}
+.scroll-items .item {
+  display: block;
+  padding-bottom: 40px;
+}
+.item .item-time {
+   display: block;
+   font-size: 45rpx;
+}
+.item .item-parkNumber {
+  border-right: 1px solid gray;
+  padding: 0 5px;
+}
+.item .item-payment {
+  padding: 0 5px;
+}
+.item .item-parkNumber, .item .item-payment {
+  font-size: 35rpx;
+  color: gray;
+}

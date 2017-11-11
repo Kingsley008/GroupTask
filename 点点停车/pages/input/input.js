@@ -38,13 +38,17 @@ Page({
     })
     // 先使用伪数据进行业务流程
     wx.request({
-      url: 'https://www.easy-mock.com/mock/59f4490be75317333e4f4ef2/example/getParkingInfo',
+      url: 'https://dev.movebroad.cn/v2/dashboard',
       data: { parkNumber: this.data.parkNumber },
       method: 'GET',
       success: (res) => {
         wx.hideLoading()
         // TODO 判断用户输入的车牌号是否存在 
-
+        res.data.hour = 1
+        res.data.minutes = 30
+        res.data.second = 20
+        res.data.parkNumber = 1234
+        res.data.payment = 80 
         wx.redirectTo({
           url: `../count/index?h=${res.data.hour}&m=${res.data.minutes}&s=${res.data.second}&payment=${res.data.payment}&parkNumber=${self.data.parkNumber}`,
         })
