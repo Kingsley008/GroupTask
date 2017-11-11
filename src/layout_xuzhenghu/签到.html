@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>&#x7B7E;&#x5230; - 攀峰签到</title>
+    <link type="image/x-icon" rel="shortcut icon" href="/favicon.ico" />
+
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <meta name="x-stylesheet-fallback-test" content="" class="sr-only" /><script>!function(a,b,c,d){var e,f=document,g=f.getElementsByTagName("SCRIPT"),h=g[g.length-1].previousElementSibling,i=f.defaultView&&f.defaultView.getComputedStyle?f.defaultView.getComputedStyle(h):h.currentStyle;if(i&&i[a]!==b)for(e=0;e<c.length;e++)f.write('<link href="'+c[e]+'" '+d+"/>")}("position","absolute",["\/lib\/bootstrap\/dist\/css\/bootstrap.min.css"], "rel=\u0022stylesheet\u0022 ");</script>
+    <link rel="stylesheet" href="css/site.css" />
+
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/SignIn/Create">攀峰签到</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">今日详情</a></li>
+                <li><a href="/SignIn/Stats">签到统计</a></li>
+                <li><a href="/SignIn/Summary">一周报表</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container body-content">
+
+
+    <h2>Sign In</h2>
+
+    <h4>签到</h4>
+    <hr />
+    <div class="row" id="root">
+        <div class="col-md-4">
+            <form method="post" action="/SignIn/Create">
+
+                <div class="form-group">
+                    <label class="control-label" for="Name">&#x59D3;&#x540D;</label>
+                    <input class="form-control" type="text" data-val="true" data-val-length="&#x59D3;&#x540D;&#x4E0D;&#x8D85;&#x8FC7;6&#x4E2A;&#x5B57;&#x7B26;&#xFF01;" data-val-length-max="6" data-val-remote="&#x4F60;&#x4ECA;&#x5929;&#x5DF2;&#x7B7E;&#x5230;&#xFF01;" data-val-remote-additionalfields="*.Name" data-val-remote-url="/SignIn/PersonExists" data-val-required="&#x59D3;&#x540D;&#x5FC5;&#x586B;&#xFF01;" id="Name" name="Name" value="" />
+                    <span class="text-danger field-validation-valid" data-valmsg-for="Name" data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="Seat">&#x5EA7;&#x4F4D;&#x53F7;</label>
+                    <input class="form-control" type="number" data-val="true" data-val-range="&#x5EA7;&#x4F4D;&#x53F7;&#x5728;1~36&#x4E4B;&#x95F4;&#xFF01;" data-val-range-max="36" data-val-range-min="1" data-val-remote="&#x8BE5;&#x5EA7;&#x4F4D;&#x5DF2;&#x6709;&#x4EBA;&#xFF01;" data-val-remote-additionalfields="*.Seat" data-val-remote-url="/SignIn/SeatExists" data-val-required="&#x7B7E;&#x5230;&#x5EA7;&#x4F4D;&#x5FC5;&#x586B;&#xFF01;" id="Seat" name="Seat" value="" />
+                    <span class="text-danger field-validation-valid" data-valmsg-for="Seat" data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="签到" class="btn btn-default" />
+                </div>
+                <input name="__RequestVerificationToken" type="hidden" value="CfDJ8FPLRY-kI0VDtdcpP1Zl-pk1qdMvJHg6Nk4HGOrUSljWV2XhBYqMzNnqgUBno-969Mos4tzsz7LBEaR01w7HW_dyNFSQHi18adENDD53tgBFub085fiNMr1TNR0D2FnwAbGcfEHQDwPFyMzGeikAK3M" /></form>
+        </div>
+        <div class="col-md-8 page-root">
+
+            <div>
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button data-seat="1" class="seat btn btn-block bg-primary" >
+                            <strong>
+                                Seat: 1
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button data-seat="2" class="seat btn btn-block bg-primary" >
+                            <strong>
+                                Seat: 2
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button data-seat="3" class="seat btn btn-block bg-primary" >
+                            <strong>
+                                Seat: 3
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button class="btn btn-block disabled bg-info">
+                            <strong>
+                                &#x9093;&#x5929;&#x9E4F;
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button class="btn btn-block disabled bg-info">
+                            <strong>
+                                &#x949F;&#x5353;&#x676D;
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button class="btn btn-block disabled bg-info">
+                            <strong>
+                                &#x5B8B;&#x5EFA;&#x950B;
+                            </strong>
+                        </button>
+                    </div>
+                </div>
+                <hr class="hidden-lg hidden-md" />
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button data-seat="1" class="seat btn btn-block bg-primary" >
+                            <strong>
+                                Seat: 1
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button data-seat="2" class="seat btn btn-block bg-primary" >
+                            <strong>
+                                Seat: 2
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button data-seat="3" class="seat btn btn-block bg-primary" >
+                            <strong>
+                                Seat: 3
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button class="btn btn-block disabled bg-info">
+                            <strong>
+                                &#x9093;&#x5929;&#x9E4F;
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button class="btn btn-block disabled bg-info">
+                            <strong>
+                                &#x949F;&#x5353;&#x676D;
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button class="btn btn-block disabled bg-info">
+                            <strong>
+                                &#x5B8B;&#x5EFA;&#x950B;
+                            </strong>
+                        </button>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button data-seat="1" class="seat btn btn-block bg-primary" >
+                            <strong>
+                                Seat: 1
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button data-seat="2" class="seat btn btn-block bg-primary" >
+                            <strong>
+                                Seat: 2
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button data-seat="3" class="seat btn btn-block bg-primary" >
+                            <strong>
+                                Seat: 3
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button class="btn btn-block disabled bg-info">
+                            <strong>
+                                &#x9093;&#x5929;&#x9E4F;
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button class="btn btn-block disabled bg-info">
+                            <strong>
+                                &#x949F;&#x5353;&#x676D;
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button class="btn btn-block disabled bg-info">
+                            <strong>
+                                &#x5B8B;&#x5EFA;&#x950B;
+                            </strong>
+                        </button>
+                    </div>
+                </div>
+                <hr class="hidden-lg hidden-md" />
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button data-seat="1" class="seat btn btn-block bg-primary" >
+                            <strong>
+                                Seat: 1
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button data-seat="2" class="seat btn btn-block bg-primary" >
+                            <strong>
+                                Seat: 2
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button data-seat="3" class="seat btn btn-block bg-primary" >
+                            <strong>
+                                Seat: 3
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button class="btn btn-block disabled bg-info">
+                            <strong>
+                                &#x9093;&#x5929;&#x9E4F;
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button class="btn btn-block disabled bg-info">
+                            <strong>
+                                &#x949F;&#x5353;&#x676D;
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button class="btn btn-block disabled bg-info">
+                            <strong>
+                                &#x5B8B;&#x5EFA;&#x950B;
+                            </strong>
+                        </button>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button data-seat="1" class="seat btn btn-block bg-primary" >
+                            <strong>
+                                Seat: 1
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button data-seat="2" class="seat btn btn-block bg-primary" >
+                            <strong>
+                                Seat: 2
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button data-seat="3" class="seat btn btn-block bg-primary" >
+                            <strong>
+                                Seat: 3
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button class="btn btn-block disabled bg-info">
+                            <strong>
+                                &#x9093;&#x5929;&#x9E4F;
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button class="btn btn-block disabled bg-info">
+                            <strong>
+                                &#x949F;&#x5353;&#x676D;
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button class="btn btn-block disabled bg-info">
+                            <strong>
+                                &#x5B8B;&#x5EFA;&#x950B;
+                            </strong>
+                        </button>
+                    </div>
+                </div>
+                <hr class="hidden-lg hidden-md" />
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button data-seat="1" class="seat btn btn-block bg-primary" >
+                            <strong>
+                                Seat: 1
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button data-seat="2" class="seat btn btn-block bg-primary" >
+                            <strong>
+                                Seat: 2
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button data-seat="3" class="seat btn btn-block bg-primary" >
+                            <strong>
+                                Seat: 3
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button class="btn btn-block disabled bg-info">
+                            <strong>
+                                &#x9093;&#x5929;&#x9E4F;
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button class="btn btn-block disabled bg-info">
+                            <strong>
+                                &#x949F;&#x5353;&#x676D;
+                            </strong>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button class="btn btn-block disabled bg-info">
+                            <strong>
+                                &#x5B8B;&#x5EFA;&#x950B;
+                            </strong>
+                        </button>
+                    </div>
+                </div>
+                <hr />
+            </div>
+        </div>
+    </div>
+
+
+    <hr />
+    <footer>
+        <p>&copy; 2017 - 攀峰签到</p>
+    </footer>
+</div>
+
+
+
+<script src="https://cdn.bootcss.com/jquery/2.2.0/jquery.min.js" crossorigin="anonymous" integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+</script>
+<script>(window.jQuery||document.write("\u003Cscript src=\u0022\/lib\/jquery\/dist\/jquery.min.js\u0022 crossorigin=\u0022anonymous\u0022 integrity=\u0022sha384-K\u002BctZQ\u002BLL8q6tP7I94W\u002BqzQsfRV2a\u002BAfHIi9k8z8l9ggpc8X\u002BYtst4yBo\/hH\u002B8Fk\u0022\u003E\u003C\/script\u003E"));</script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+</script>
+<script>(window.jQuery && window.jQuery.fn && window.jQuery.fn.modal||document.write("\u003Cscript src=\u0022\/lib\/bootstrap\/dist\/js\/bootstrap.min.js\u0022 crossorigin=\u0022anonymous\u0022 integrity=\u0022sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa\u0022\u003E\u003C\/script\u003E"));</script>
+<script src="/js/site.min.js?v=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU"></script>
+
+
+
+
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js" crossorigin="anonymous" integrity="sha384-Fnqn3nxp3506LP/7Y3j/25BlWeA3PXTyT1l78LjECcPaKCV12TsZP7yyMxOe/G/k">
+</script>
+<script>(window.jQuery && window.jQuery.validator||document.write("\u003Cscript src=\u0022\/lib\/jquery-validation\/dist\/jquery.validate.min.js\u0022 crossorigin=\u0022anonymous\u0022 integrity=\u0022sha384-Fnqn3nxp3506LP\/7Y3j\/25BlWeA3PXTyT1l78LjECcPaKCV12TsZP7yyMxOe\/G\/k\u0022\u003E\u003C\/script\u003E"));</script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js" crossorigin="anonymous" integrity="sha384-JrXK+k53HACyavUKOsL+NkmSesD2P+73eDMrbTtTk0h4RmOF8hF8apPlkp26JlyH">
+</script>
+<script>(window.jQuery && window.jQuery.validator && window.jQuery.validator.unobtrusive||document.write("\u003Cscript src=\u0022\/lib\/jquery-validation-unobtrusive\/jquery.validate.unobtrusive.min.js\u0022 crossorigin=\u0022anonymous\u0022 integrity=\u0022sha384-JrXK\u002Bk53HACyavUKOsL\u002BNkmSesD2P\u002B73eDMrbTtTk0h4RmOF8hF8apPlkp26JlyH\u0022\u003E\u003C\/script\u003E"));</script>
+
+<script>
+    $('.seat').click(function () {
+        $('#Seat').val($(this).attr('data-seat'))
+    });
+    console.log(document.documentElement.clientWidth );
+    if(document.documentElement.clientWidth < 520){
+        $.get('data/data1.json', null, function (res) {
+            var totalTemp = '';
+            for(var i = 0; i < res.length; i++){
+                var temp = `<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button data-seat="1" class="seat btn btn-block bg-primary fn-margin" >
+                            <strong>
+                                Seat: ${res[i].set}
+                            </strong>
+                        </button>
+                    </div>`
+                totalTemp += temp;
+            }
+
+            $('.page-root').html(totalTemp)
+
+        })
+            var temp = '<nav aria-label="Page navigation" class="fn-center">\n' +
+                '  <ul class="pagination">\n' +
+                '    <li>\n' +
+                '      <a href="#" aria-label="Previous">\n' +
+                '        <span aria-hidden="true">&laquo;</span>\n' +
+                '      </a>\n' +
+                '    </li>\n' +
+                '    <li><a href="#" class="page1">1</a></li>\n' +
+                '    <li><a href="#" class="page2">2</a></li>\n' +
+                '    <li><a href="#" class="page3">3</a></li>\n' +
+                '    <li><a href="#" class="page4">4</a></li>\n' +
+                '    <li><a href="#" class="page5">5</a></li>\n' +
+                '    <li><a href="#" class="page6">6</a></li>\n' +
+                '    <li>\n' +
+                '      <a href="#" aria-label="Next">\n' +
+                '        <span aria-hidden="true">&raquo;</span>\n' +
+                '      </a>\n' +
+                '    </li>\n' +
+                '  </ul>\n' +
+                '</nav>';
+        $('#root').append(temp);
+
+        $('.page1').on('click', function (e) {
+            e.preventDefault();
+            $.get('data/data1.json', null, function (res) {
+                var totalTemp = '';
+                for(var i = 0; i < res.length; i++){
+                    var temp = `<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button data-seat="1" class="seat btn btn-block bg-primary fn-margin" >
+                            <strong>
+                                Seat: ${res[i].set}
+                            </strong>
+                        </button>
+                    </div>`
+                    totalTemp += temp;
+                }
+
+                $('.page-root').html(totalTemp)
+
+            })
+        });
+        // 后面套路都一样了....
+        $('.page2').on('click', function (e) {
+            e.preventDefault();
+            $.get('data/data2.json', null, function (res) {
+                var totalTemp = '';
+                for(var i = 0; i < res.length; i++){
+                    var temp = `<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 fn-margin">
+                        <button data-seat="1" class="seat btn btn-block bg-primary fn-margin" >
+                            <strong>
+                                Seat: ${res[i].set}
+                            </strong>
+                        </button>
+                    </div>`
+                    totalTemp += temp;
+                }
+
+                $('.page-root').html(totalTemp)
+
+            })
+        })
+    }
+
+
+</script>
+
+</body>
+</html>
