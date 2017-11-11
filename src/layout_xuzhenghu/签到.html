@@ -369,10 +369,10 @@
         $('#Seat').val($(this).attr('data-seat'))
     });
     console.log(document.documentElement.clientWidth );
-    if(document.documentElement.clientWidth < 520){
+    if(document.documentElement.clientWidth < 520) {
         $.get('data/data1.json', null, function (res) {
             var totalTemp = '';
-            for(var i = 0; i < res.length; i++){
+            for (var i = 0; i < res.length; i++) {
                 var temp = `<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                         <button data-seat="1" class="seat btn btn-block bg-primary fn-margin" >
                             <strong>
@@ -386,67 +386,118 @@
             $('.page-root').html(totalTemp)
 
         })
-            var temp = '<nav aria-label="Page navigation" class="fn-center">\n' +
-                '  <ul class="pagination">\n' +
-                '    <li>\n' +
-                '      <a href="#" aria-label="Previous">\n' +
-                '        <span aria-hidden="true">&laquo;</span>\n' +
-                '      </a>\n' +
-                '    </li>\n' +
-                '    <li><a href="#" class="page1">1</a></li>\n' +
-                '    <li><a href="#" class="page2">2</a></li>\n' +
-                '    <li><a href="#" class="page3">3</a></li>\n' +
-                '    <li><a href="#" class="page4">4</a></li>\n' +
-                '    <li><a href="#" class="page5">5</a></li>\n' +
-                '    <li><a href="#" class="page6">6</a></li>\n' +
-                '    <li>\n' +
-                '      <a href="#" aria-label="Next">\n' +
-                '        <span aria-hidden="true">&raquo;</span>\n' +
-                '      </a>\n' +
-                '    </li>\n' +
-                '  </ul>\n' +
-                '</nav>';
+        var temp = '<nav aria-label="Page navigation" class="fn-center">\n' +
+            '  <ul class="pagination">\n' +
+            '    <li>\n' +
+            '      <a href="#" aria-label="Previous">\n' +
+            '        <span aria-hidden="true">&laquo;</span>\n' +
+            '      </a>\n' +
+            '    </li>\n' +
+            '    <li><a href="#" class="page1">1</a></li>\n' +
+            '    <li><a href="#" class="page2">2</a></li>\n' +
+            '    <li><a href="#" class="page3">3</a></li>\n' +
+            '    <li><a href="#" class="page4">4</a></li>\n' +
+            '    <li><a href="#" class="page5">5</a></li>\n' +
+            '    <li><a href="#" class="page6">6</a></li>\n' +
+            '    <li>\n' +
+            '      <a href="#" aria-label="Next">\n' +
+            '        <span aria-hidden="true">&raquo;</span>\n' +
+            '      </a>\n' +
+            '    </li>\n' +
+            '  </ul>\n' +
+            '</nav>';
         $('#root').append(temp);
 
-        $('.page1').on('click', function (e) {
+        $('.pagination').on('click', function (e) {
             e.preventDefault();
-            $.get('data/data1.json', null, function (res) {
-                var totalTemp = '';
-                for(var i = 0; i < res.length; i++){
-                    var temp = `<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+            var target = e.target;
+            /**
+             *  可以用代理的方式 优化代码
+             * **/
+            switch (target.className) {
+                case 'page1': {
+                    $.get('data/data1.json', null, function (res) {
+                        var totalTemp = '';
+                        for (var i = 0; i < res.length; i++) {
+                            var temp = `<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                         <button data-seat="1" class="seat btn btn-block bg-primary fn-margin" >
                             <strong>
                                 Seat: ${res[i].set}
                             </strong>
                         </button>
                     </div>`
-                    totalTemp += temp;
+                            totalTemp += temp;
+                        }
+
+                        $('.page-root').html(totalTemp)
+
+                    })
                 }
+                break;
 
-                $('.page-root').html(totalTemp)
+                case 'page2': {
+                    $.get('data/data2.json', null, function (res) {
+                        var totalTemp = '';
+                        for (var i = 0; i < res.length; i++) {
+                            var temp = `<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button data-seat="1" class="seat btn btn-block bg-primary fn-margin" >
+                            <strong>
+                                Seat: ${res[i].set}
+                            </strong>
+                        </button>
+                    </div>`
+                            totalTemp += temp;
+                        }
 
-            })
+                        $('.page-root').html(totalTemp)
+
+                    })
+                }
+                break
+
+            }
         });
-        // 后面套路都一样了....
-        $('.page2').on('click', function (e) {
-            e.preventDefault();
-            $.get('data/data2.json', null, function (res) {
-                var totalTemp = '';
-                for(var i = 0; i < res.length; i++){
-                    var temp = `<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 fn-margin">
-                        <button data-seat="1" class="seat btn btn-block bg-primary fn-margin" >
-                            <strong>
-                                Seat: ${res[i].set}
-                            </strong>
-                        </button>
-                    </div>`
-                    totalTemp += temp;
-                }
 
-                $('.page-root').html(totalTemp)
+//        $('.page1').on('click', function (e) {
+//            e.preventDefault();
+//            $.get('data/data1.json', null, function (res) {
+//                var totalTemp = '';
+//                for(var i = 0; i < res.length; i++){
+//                    var temp = `<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+//                        <button data-seat="1" class="seat btn btn-block bg-primary fn-margin" >
+//                            <strong>
+//                                Seat: ${res[i].set}
+//                            </strong>
+//                        </button>
+//                    </div>`
+//                    totalTemp += temp;
+//                }
+//
+//                $('.page-root').html(totalTemp)
+//
+//            })
+//        });
+//        // 后面套路都一样了....
+//        $('.page2').on('click', function (e) {
+//            e.preventDefault();
+//            $.get('data/data2.json', null, function (res) {
+//                var totalTemp = '';
+//                for(var i = 0; i < res.length; i++){
+//                    var temp = `<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 fn-margin">
+//                        <button data-seat="1" class="seat btn btn-block bg-primary fn-margin" >
+//                            <strong>
+//                                Seat: ${res[i].set}
+//                            </strong>
+//                        </button>
+//                    </div>`
+//                    totalTemp += temp;
+//                }
+//
+//                $('.page-root').html(totalTemp)
+//
+//            })
+//        })
 
-            })
-        })
     }
 
 
