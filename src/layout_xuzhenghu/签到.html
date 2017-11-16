@@ -379,24 +379,26 @@
         $('#Seat').val($(this).attr('data-seat'))
     }
 
-    console.log(document.documentElement.clientWidth );
-    if(document.documentElement.clientWidth < 520) {
-        $.get('data/data1.json', null, function (res) {
-            var totalTemp = '';
-            for (var i = 0; i < res.length; i++) {
-                var temp = `<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                        <button data-seat= ${res[i].set} class="seat btn btn-block bg-primary fn-margin" >
+    function makeTemp(res) {
+        var totalTemp = '';
+        for (var i = 0; i < res.length; i++) {
+            var temp = `<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button data-seat=${res[i].set} class="seat btn btn-block bg-primary fn-margin" >
                             <strong>
                                 Seat: ${res[i].set}
                             </strong>
                         </button>
-                    </div>`;
-                totalTemp += temp;
-            }
+                    </div>`
+            totalTemp += temp;
+        }
+        unbindSeat();
+        $('.page-root').html(totalTemp);
+        bindSeat();
+    }
 
-            $('.page-root').html(totalTemp)
-            bindSeat();
-        });
+    console.log(document.documentElement.clientWidth );
+    if(document.documentElement.clientWidth < 520) {
+        $.get('data/data1.json', null,makeTemp);
         var temp = '<nav aria-label="Page navigation" class="fn-center">\n' +
             '  <ul class="pagination">\n' +
             '    <li>\n' +
@@ -427,110 +429,22 @@
              * **/
             switch (target.className) {
                 case 'page1': {
-                    $.get('data/data1.json', null, function (res) {
-                        var totalTemp = '';
-                        for (var i = 0; i < res.length; i++) {
-                            var temp = `<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                        <button data-seat="1" class="seat btn btn-block bg-primary fn-margin" >
-                            <strong>
-                                Seat: ${res[i].set}
-                            </strong>
-                        </button>
-                    </div>`
-                            totalTemp += temp;
-                        }
-                        unbindSeat();
-                        $('.page-root').html(totalTemp);
-                        bindSeat();
-                    })
+                    $.get('data/data1.json', null,makeTemp)
                 }
                 break;
 
                 case 'page2': {
-                    $.get('data/data2.json', null, function (res) {
-                        var totalTemp = '';
-                        for (var i = 0; i < res.length; i++) {
-                            var temp = `<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                        <button data-seat="1" class="seat btn btn-block bg-primary fn-margin" >
-                            <strong>
-                                Seat: ${res[i].set}
-                            </strong>
-                        </button>
-                    </div>`
-                            totalTemp += temp;
-                        }
-
-                        unbindSeat();
-                        $('.page-root').html(totalTemp);
-                        bindSeat();
-
-                    })
+                    $.get('data/data2.json', null, makeTemp)
                 }
-                break
+                break;
                 case 'page3':{
-                    $.get('data/data3.json', null, function (res) {
-                        var totalTemp = '';
-                        for (var i = 0; i < res.length; i++) {
-                            var temp = `<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                        <button data-seat=${res[i].set} class="seat btn btn-block bg-primary fn-margin" >
-                            <strong>
-                                Seat: ${res[i].set}
-                            </strong>
-                        </button>
-                    </div>`
-                            totalTemp += temp;
-                        }
-
-                        unbindSeat();
-                        $('.page-root').html(totalTemp);
-                        bindSeat();
-
-                    });
+                    $.get('data/data3.json', null,makeTemp);
                     break;
                 }
 
             }
         });
 
-//        $('.page1').on('click', function (e) {
-//            e.preventDefault();
-//            $.get('data/data1.json', null, function (res) {
-//                var totalTemp = '';
-//                for(var i = 0; i < res.length; i++){
-//                    var temp = `<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-//                        <button data-seat="1" class="seat btn btn-block bg-primary fn-margin" >
-//                            <strong>
-//                                Seat: ${res[i].set}
-//                            </strong>
-//                        </button>
-//                    </div>`
-//                    totalTemp += temp;
-//                }
-//
-//                $('.page-root').html(totalTemp)
-//
-//            })
-//        });
-//        // 后面套路都一样了....
-//        $('.page2').on('click', function (e) {
-//            e.preventDefault();
-//            $.get('data/data2.json', null, function (res) {
-//                var totalTemp = '';
-//                for(var i = 0; i < res.length; i++){
-//                    var temp = `<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 fn-margin">
-//                        <button data-seat="1" class="seat btn btn-block bg-primary fn-margin" >
-//                            <strong>
-//                                Seat: ${res[i].set}
-//                            </strong>
-//                        </button>
-//                    </div>`
-//                    totalTemp += temp;
-//                }
-//
-//                $('.page-root').html(totalTemp)
-//
-//            })
-//        })
 
     }else {
         bindSeat();
