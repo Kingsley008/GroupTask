@@ -365,27 +365,38 @@
 <script>(window.jQuery && window.jQuery.validator && window.jQuery.validator.unobtrusive||document.write("\u003Cscript src=\u0022\/lib\/jquery-validation-unobtrusive\/jquery.validate.unobtrusive.min.js\u0022 crossorigin=\u0022anonymous\u0022 integrity=\u0022sha384-JrXK\u002Bk53HACyavUKOsL\u002BNkmSesD2P\u002B73eDMrbTtTk0h4RmOF8hF8apPlkp26JlyH\u0022\u003E\u003C\/script\u003E"));</script>
 
 <script>
-    $('.seat').click(function () {
+    // 解除绑定
+    function unbindSeat() {
+        $('.seat').unbind('click', onSeatClick);
+    }
+
+    // 绑定事件
+    function bindSeat() {
+        $('.seat').on('click', onSeatClick);
+    }
+
+    function onSeatClick() {
         $('#Seat').val($(this).attr('data-seat'))
-    });
+    }
+
     console.log(document.documentElement.clientWidth );
     if(document.documentElement.clientWidth < 520) {
         $.get('data/data1.json', null, function (res) {
             var totalTemp = '';
             for (var i = 0; i < res.length; i++) {
                 var temp = `<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                        <button data-seat="1" class="seat btn btn-block bg-primary fn-margin" >
+                        <button data-seat= ${res[i].set} class="seat btn btn-block bg-primary fn-margin" >
                             <strong>
                                 Seat: ${res[i].set}
                             </strong>
                         </button>
-                    </div>`
+                    </div>`;
                 totalTemp += temp;
             }
 
             $('.page-root').html(totalTemp)
-
-        })
+            bindSeat();
+        });
         var temp = '<nav aria-label="Page navigation" class="fn-center">\n' +
             '  <ul class="pagination">\n' +
             '    <li>\n' +
@@ -428,9 +439,9 @@
                     </div>`
                             totalTemp += temp;
                         }
-
-                        $('.page-root').html(totalTemp)
-
+                        unbindSeat();
+                        $('.page-root').html(totalTemp);
+                        bindSeat();
                     })
                 }
                 break;
@@ -449,11 +460,34 @@
                             totalTemp += temp;
                         }
 
-                        $('.page-root').html(totalTemp)
+                        unbindSeat();
+                        $('.page-root').html(totalTemp);
+                        bindSeat();
 
                     })
                 }
                 break
+                case 'page3':{
+                    $.get('data/data3.json', null, function (res) {
+                        var totalTemp = '';
+                        for (var i = 0; i < res.length; i++) {
+                            var temp = `<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button data-seat=${res[i].set} class="seat btn btn-block bg-primary fn-margin" >
+                            <strong>
+                                Seat: ${res[i].set}
+                            </strong>
+                        </button>
+                    </div>`
+                            totalTemp += temp;
+                        }
+
+                        unbindSeat();
+                        $('.page-root').html(totalTemp);
+                        bindSeat();
+
+                    });
+                    break;
+                }
 
             }
         });
@@ -498,6 +532,8 @@
 //            })
 //        })
 
+    }else {
+        bindSeat();
     }
 
 
