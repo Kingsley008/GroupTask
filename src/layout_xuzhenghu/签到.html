@@ -365,6 +365,7 @@
 <script>(window.jQuery && window.jQuery.validator && window.jQuery.validator.unobtrusive||document.write("\u003Cscript src=\u0022\/lib\/jquery-validation-unobtrusive\/jquery.validate.unobtrusive.min.js\u0022 crossorigin=\u0022anonymous\u0022 integrity=\u0022sha384-JrXK\u002Bk53HACyavUKOsL\u002BNkmSesD2P\u002B73eDMrbTtTk0h4RmOF8hF8apPlkp26JlyH\u0022\u003E\u003C\/script\u003E"));</script>
 
 <script>
+    var currentPage = 1;
     // 解除绑定
     function unbindSeat() {
         $('.seat').unbind('click', onSeatClick);
@@ -381,16 +382,18 @@
 
     function makeTemp(res) {
         var totalTemp = '';
-        for (var i = 0; i < res.length; i++) {
+        console.log(res.seat);
+        for (var i = 0; i < res.seat.length; i++) {
             var temp = `<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                        <button data-seat=${res[i].set} class="seat btn btn-block bg-primary fn-margin" >
+                        <button data-seat=${res.seat[i].set} class="seat btn btn-block bg-primary fn-margin" >
                             <strong>
-                                Seat: ${res[i].set}
+                                Seat: ${res.seat[i].set}
                             </strong>
                         </button>
                     </div>`
             totalTemp += temp;
         }
+        currentPage = res.page;
         unbindSeat();
         $('.page-root').html(totalTemp);
         bindSeat();
@@ -402,8 +405,8 @@
         var temp = '<nav aria-label="Page navigation" class="fn-center">\n' +
             '  <ul class="pagination">\n' +
             '    <li>\n' +
-            '      <a href="#" aria-label="Previous">\n' +
-            '        <span aria-hidden="true">&laquo;</span>\n' +
+            '      <a href="#" aria-label="Previous" class="prev">\n' +
+            '        <span aria-hidden="true" class="prev">&laquo;</span>\n' +
             '      </a>\n' +
             '    </li>\n' +
             '    <li><a href="#" class="page1">1</a></li>\n' +
@@ -413,13 +416,15 @@
             '    <li><a href="#" class="page5">5</a></li>\n' +
             '    <li><a href="#" class="page6">6</a></li>\n' +
             '    <li>\n' +
-            '      <a href="#" aria-label="Next">\n' +
-            '        <span aria-hidden="true">&raquo;</span>\n' +
+            '      <a href="#" aria-label="Next" class="next">\n' +
+            '        <span aria-hidden="true" class="next">&raquo;</span>\n' +
             '      </a>\n' +
             '    </li>\n' +
             '  </ul>\n' +
             '</nav>';
         $('#root').append(temp);
+
+
 
         $('.pagination').on('click', function (e) {
             e.preventDefault();
@@ -429,17 +434,41 @@
              * **/
             switch (target.className) {
                 case 'page1': {
-                    $.get('data/data1.json', null,makeTemp)
+                    $.get(`data/data1.json`, null,makeTemp);
                 }
                 break;
 
                 case 'page2': {
-                    $.get('data/data2.json', null, makeTemp)
+                    $.get('data/data2.json', null, makeTemp);
                 }
                 break;
                 case 'page3':{
                     $.get('data/data3.json', null,makeTemp);
-                    break;
+
+                }
+                break;
+                case 'page4':{
+                    $.get('data/data4.json', null,makeTemp);
+
+                }
+                break;
+                case 'page5':{
+                    $.get('data/data5.json', null,makeTemp);
+
+                }
+                break;
+                case 'page6':{
+                    $.get('data/data6.json', null,makeTemp);
+
+                }
+                break;
+                case 'prev':{
+                    prev();
+
+                }
+                break;
+                case 'next':{
+                    next();
                 }
 
             }
@@ -449,6 +478,21 @@
     }else {
         bindSeat();
     }
+
+    // 前一页
+    function prev() {
+        --currentPage;
+        currentPage = Math.max(1,currentPage);
+        $.get(`data/data${currentPage}.json`, null,makeTemp);
+    }
+
+    // 后一页
+    function next() {
+        ++currentPage;
+        currentPage = Math.min(6,currentPage);
+        $.get(`data/data${currentPage}.json`, null,makeTemp);
+    }
+
 
 
 </script>
