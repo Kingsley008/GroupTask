@@ -69,7 +69,53 @@ Page({
     userInfo:{},
   },
   //options : 页面跳转带来的参数 -- 计时参数
-  
+  getMarkers() {
+    
+    // 4.请求服务器，显示附近的单车，用marker标记
+    wx.request({
+      url: 'https://dev.movebroad.cn/v2/dashboard',
+      data: {},
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {}, // 设置请求的 header
+      success: (res) => {
+        wx.hideLoading();
+        // TODO 过滤出两个marker不同的状态
+        // 1. Markers = [] 后台数据组织
+        // 2. 判断 后台数据：status 状态选择标记的图片路径
+        console.log(res.data.data);
+        const positionArr = res.data.data;
+        const markers = []
+        positionArr.forEach((v, i) => {
+          let iconPath = "";
+          if (v.status) {
+            iconPath = "/images/full.png"
+          } else {
+            iconPath = "/images/empty.png"
+          }
+          let marker = {
+            id: nextId++,
+            latitude: v.offset_y,
+            longitude: v.offset_x,    
+           // title: v.stall_code,  // 停车场号
+            iconPath: iconPath,
+          }
+          markers.push(marker);
+
+        })
+
+        this.setData({
+          markers: markers
+        })
+
+      },
+      fail: function (res) {
+        // fail
+      },
+      complete: function (res) {
+        // complete
+      }
+    })
+  },
   onLoad:function(options){
     // 判断当前用户是否合法 
     let self = this;
@@ -100,7 +146,6 @@ Page({
 
     // 获取定时器，用于判断是否已经在计费
     // this.timer = options.timer;
-
     wx.getLocation({
       //得到当前用户的经纬度 
       type:"gcj02", 
@@ -152,12 +197,12 @@ Page({
           },
           {
             id: 4,
-            iconPath: '/images/reset.png', // 刷新
+            iconPath: '/images/reset2.png', // 刷新
             position: {
-              left: res.windowWidth - 240,
-              top: res.windowHeight - 90,
-              width: 20,
-              height: 20
+              left: 20,
+              top: res.windowHeight - 140,
+              width: 50,
+              height: 50
             },
             clickable: true
           },
@@ -182,48 +227,49 @@ Page({
     })
 
     // 4.请求服务器，显示附近的单车，用marker标记
-    wx.request({
-      url: 'https://dev.movebroad.cn/v2/dashboard',
-      data: {},
-      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {}, // 设置请求的 header
-      success: (res) => {
-        // TODO 过滤出两个marker不同的状态
-        // 1. Markers = [] 后台数据组织
-        // 2. 判断 后台数据：status 状态选择标记的图片路径
-        console.log(res.data.data);
-        const positionArr = res.data.data;
-        const markers = []
-        positionArr.forEach((v,i)=>{
-            let iconPath = "";
-            if(v.status){
-              iconPath = "/images/full.png"
-            } else {
-              iconPath = "/images/empty.png"
-            }
-              let marker = {
-                id: nextId++,
-                latitude:v.offset_y,
-                longitude:v.offset_x, 
-                title: v.parkName,
-                iconPath: iconPath,
-              }
-            markers.push(marker);
+    this.getMarkers();
+    // wx.request({
+    //   url: 'https://dev.movebroad.cn/v2/dashboard',
+    //   data: {},
+    //   method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+    //   // header: {}, // 设置请求的 header
+    //   success: (res) => {
+    //     // TODO 过滤出两个marker不同的状态
+    //     // 1. Markers = [] 后台数据组织
+    //     // 2. 判断 后台数据：status 状态选择标记的图片路径
+    //     console.log(res.data.data);
+    //     const positionArr = res.data.data;
+    //     const markers = []
+    //     positionArr.forEach((v,i)=>{
+    //         let iconPath = "";
+    //         if(v.status){
+    //           iconPath = "/images/full.png"
+    //         } else {
+    //           iconPath = "/images/empty.png"
+    //         }
+    //           let marker = {
+    //             id: nextId++,
+    //             latitude:v.offset_y,
+    //             longitude:v.offset_x, 
+    //             title: v.parkName,
+    //             iconPath: iconPath,
+    //           }
+    //         markers.push(marker);
             
-      })
+    //   })
        
-        this.setData({
-          markers: markers
-        })
+    //     this.setData({
+    //       markers: markers
+    //     })
 
-      },
-      fail: function (res) {
-        // fail
-      },
-      complete: function (res) {
-        // complete
-      }
-    })
+    //   },
+    //   fail: function (res) {
+    //     // fail
+    //   },
+    //   complete: function (res) {
+    //     // complete
+    //   }
+    // })
     // wx.navigateTo({
     //   url: '../my/index'
     // });
@@ -334,7 +380,11 @@ Page({
       }
       // 点击刷新控件
       case 4:{
-        this.reset();
+        // 再次请求数据
+        wx.showLoading({
+          title: '车位刷新中',
+        })
+        this.getMarkers();
         break;
       }
       // 点击头像控件，跳转到个人中心
